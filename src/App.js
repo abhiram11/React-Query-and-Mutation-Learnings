@@ -7,16 +7,24 @@ function App() {
   // const [viewPost, setViewPost] = useState(false);
   const [viewPostId, setViewPostId] = useState(null);
 
-  const { isLoading: allPostsLoading, data: posts } = useQuery("posts", () =>
-    fetcher("https://jsonplaceholder.typicode.com/posts")
+  const { isLoading: allPostsLoading, data: posts } = useQuery(
+    "posts",
+    () => fetcher("https://jsonplaceholder.typicode.com/posts"),
+    {
+      cacheTime: 1000,
+      staleTime: 1000,
+      enabled: false,
+      initialData: "Hi I am the initial Data!!",
+      select: (data) => data.slice(0, 5), //question whether it should be data or posts here!
+    }
   );
 
-  const { body: postData } = useQuery("post", () => {
-    if (viewPostId) {
-      fetcher(`https://jsonplaceholder.typicode.com/posts/${viewPostId}`);
-      console.log("Post Data:" + postData);
-    }
-  });
+  // const { body: postData } = useQuery("post", () => {
+  //   if (viewPostId) {
+  //     fetcher(`https://jsonplaceholder.typicode.com/posts/${viewPostId}`);
+  //     console.log("Post Data:" + postData);
+  //   }
+  // });
 
   // console.log("query data:\n", posts);
   console.log("View Post ID Changed:" + viewPostId);
@@ -32,7 +40,6 @@ function App() {
       ) : (
         <>
           <h3 style={{ textAlign: "center" }}>Content Loaded 👇🏻</h3>
-          {viewPostId ? <p></p> : null}
           <ol>
             {posts.map((post) => (
               <li
