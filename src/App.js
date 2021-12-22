@@ -74,10 +74,6 @@ function App() {
                 client.setQueryData(["posts", 0, "title"], title);
                 client.refetchQueries(["posts"]); 
               }}
-              // onSubmit={(e) => {
-              //   e.preventDefault();
-              //   client.setQueryData(["posts", 0, "title"], title);
-              // }}
               // client.setQueryData(["posts", 0, "title"], e.target.value)
             /> */}
           </div>
